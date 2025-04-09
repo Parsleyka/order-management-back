@@ -22,9 +22,8 @@ const requestLogger = morgan((tokens, req, res) => {
     ].join(' ')
 })
 
-const errorLogger = (err, req, res) => {
+const errorLogger = (req, res, err) => {
     logger.error(`${req.method} ${req.url} - ${err.message}\n${err.stack}`)
-    res.status(500).json({ error: 'Internal server error' })
 }
 
 module.exports = {

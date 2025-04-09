@@ -1,5 +1,6 @@
 const orderService = require("../services/orderService");
 const { handleApiError } = require("../utils/errorHelper");
+const { sendResponse } = require("../utils/responseHelper");
 
 const postOrder = async (req, res) => {
     const body = req.body;
@@ -7,11 +8,11 @@ const postOrder = async (req, res) => {
     try {
         const order = await orderService.postOrder(body);
 
-        return res.json(order);
+        sendResponse(res, order);
     } catch (error) {
-        handleApiError(res, error)
+        handleApiError(req, res, error);
     }
-}
+};
 
 const getOrderByUserId = async (req, res) => {
     const { userId } = req.params;
@@ -19,11 +20,11 @@ const getOrderByUserId = async (req, res) => {
     try {
         const orders = await orderService.getOrdersByUserIdService(userId);
 
-        return res.json(orders);
+        sendResponse(res, orders);
     } catch (error) {
-        handleApiError(res, error)
+        handleApiError(req, res, error);
     }
-}
+};
 
 module.exports = {
     getOrderByUserId,

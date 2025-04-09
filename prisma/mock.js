@@ -1,40 +1,42 @@
 const { PrismaClient } = require("@prisma/client");
 
 (async function mock() {
-    const prisma = new PrismaClient()
+    const prisma = new PrismaClient();
 
-    console.log('Start Mocking');
+    console.log("Start Mocking");
 
     try {
-        const alice = await prisma.user.create({
+        const user = await prisma.user.create({
             data: {
-                name: "Alice",
-                email: "alice@example.com",
+                name: "TestUser",
+                email: "test@test.com",
                 balance: 150.00
             }
         });
 
-        const book = await prisma.product.create({
+        const product = await prisma.product.create({
             data: {
-                name: "Book",
+                name: "TestProduct",
                 price: 25.99,
                 stock: 100
             }
         });
 
+        const quantity = 2;
+        const totalPrice = product.price * 2;
+
         await prisma.order.create({
             data: {
-                quantity: 2,
-                totalPrice: 51.98,
-                userId: alice.id,
-                productId: book.id
+                quantity: quantity,
+                totalPrice: totalPrice,
+                userId: user.id,
+                productId: product.id
             }
         });
 
-        console.log('Mocked');
-
+        console.log("Mocked");
     } catch (error) {
-        console.log('Mocking failed');
+        console.log("Mocking failed");
         console.error(error);
     }
 })();

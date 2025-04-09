@@ -11,7 +11,7 @@ const rateLimiter = rateLimit({
             statusCode: options.statusCode
         });
 
-        handleApiError(res, error);
+        handleApiError(req, res, error);
     }
 });
 

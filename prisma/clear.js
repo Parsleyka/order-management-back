@@ -1,19 +1,18 @@
 const { PrismaClient } = require("@prisma/client");
 
 (async function clear() {
-    const prisma = new PrismaClient()
+    const prisma = new PrismaClient();
 
-    console.log('Start clearing');
+    console.log("Start clearing");
 
     try {
-        await prisma.order.deleteMany()
-        await prisma.product.deleteMany()
-        await prisma.user.deleteMany()
+        await prisma.order.deleteMany();
+        await prisma.product.deleteMany();
+        await prisma.user.deleteMany();
 
-        console.log('Cleared');
-
+        console.log("Cleared");
     } catch (error) {
-        console.log('Clearing failed');
+        console.log("Clearing failed");
         console.error(error);
     }
 })();

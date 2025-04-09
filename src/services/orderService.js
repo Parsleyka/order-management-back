@@ -21,7 +21,8 @@ const getOrdersByUserIdService = async (userId) => {
 };
 
 const postOrder = async (postOrderInput) => {
-    const { userId, productId, quantity } = postOrderInput;
+    const { userId, productId, quantity} = postOrderInput;
+    const quantityNumber = parseInt(quantity)
 
     const user = await prisma.user.findUnique({ where: { id: userId } });
     const product = await prisma.product.findUnique({ where: { id: productId } });
@@ -40,7 +41,7 @@ const postOrder = async (postOrderInput) => {
         });
     }
 
-    const totalPrice = product.price * quantity;
+    const totalPrice = product.price * quantityNumber;
 
     if (user.balance < totalPrice) {
         throw createError({
@@ -70,14 +71,14 @@ const postOrder = async (postOrderInput) => {
             where: { id: productId },
             data: {
                 stock: {
-                    decrement: quantity
+                    decrement: quantityNumber
                 }
             }
         });
 
         return tx.order.create({
             data: {
-                quantity,
+                quantity: quantityNumber,
                 totalPrice,
                 userId,
                 productId

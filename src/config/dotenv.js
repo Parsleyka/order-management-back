@@ -1,3 +1,5 @@
+/*global __dirname, process*/
+
 const dotenv = require("dotenv");
 const path = require("path");
 
